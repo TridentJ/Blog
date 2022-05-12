@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    <bean id="myUserDetailsService" class="com.jyf.blog.security.myUserDetailsService"></bean>
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg value="256"></constructor-arg>
+    </bean>
+    <bean id="myAuthenticationSuccessHandler" class="com.jyf.blog.security.MyAuthenticationSuccessHandler"></bean>
+    <bean id="myAuthenticationFailureHandler" class="com.jyf.blog.security.MyAuthenticationFailureHandler"></bean>
+    <sec:authentication-manager>
+        <sec:authentication-provider user-service-ref="myUserDetailsService">
+            
+            <sec:password-encoder ref="passwordEncoder">
+                <!-- password{salt}-->
+                <sec:salt-source system-wide="a3bd9a0ac2e0771d3df2fa7756da6e74"></sec:salt-source>
+                <!-- <sec:salt-source user-property="mail"/> -->
+            </sec:password-encoder>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+    <sec:http auto-config="true" use-expressions="false">
+        <sec:intercept-url pattern="/login.htm" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/check.htm" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/error/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="/admin/*.*" access="ROLE_ADMIN,ROLE_USER,ROLE_VISITOR"/>
+        <sec:intercept-url pattern="/admin/api/*.json" access="ROLE_ADMIN,ROLE_USER,ROLE_VISITOR"/>
+        <sec:intercept-url pattern="/*.*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <sec:intercept-url pattern="*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <!--<sec:form-login login-page="/admin/login.htm" username-parameter="mail" password-parameter="password"
+                        default-target-url="/admin/adminIndex.htm" authentication-failure-url="/admin/login.htm?err=1" login-processing-url="/admin/check.htm"/>-->
+        <sec:form-login login-page="/login.htm" username-parameter="username" password-parameter="password"
+                        authentication-success-handler-ref="myAuthenticationSuccessHandler" authentication-failure-url="/login.htm?err=1" login-processing-url="/check.htm"/>
+        <sec:logout invalidate-session="true" logout-success-url="/admin/adminIndex.htm" logout-url="/admin/logout.htm" delete-cookies="JSESSIONID"></sec:logout>
+        <sec:session-management invalid-session-url="/login.htm?err=2"></sec:session-management>
+        <sec:csrf disabled="true"/>
+    </sec:http>
+    
+</beans>

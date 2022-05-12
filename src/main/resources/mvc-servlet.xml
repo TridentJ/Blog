@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    
+    <!-- 开启自动扫描 只扫描Controller组件，其他组件由applicationContext扫描 -->
+    <context:component-scan base-package="com.jyf.blog.controller">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
+    </context:component-scan>
+    
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <!--让@ResponseBody注解自动转换json-->
+            <!--
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>text/html;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            -->
+            <!-- 配置Fastjson支持 -->
+            
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json</value>
+                    </list>
+                </property>
+                <property name="features">
+                    <list>
+                        <value>WriteMapNullValue</value>
+                        <value>QuoteFieldNames</value>
+                    </list>
+                </property>
+            </bean>
+            
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/views/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    
+    <mvc:resources mapping="/js/**/" location="/js/"/>
+    <mvc:resources mapping="/css/**/" location="/css/"/>
+    <mvc:resources mapping="/file/**/" location="/file/"/>
+    <mvc:resources mapping="/img/**/" location="/img/"/>
+    <mvc:resources mapping="/fonts/**/" location="/fonts/"/>
+    <mvc:resources mapping="/error/**/" location="/error/"/>
+    <mvc:resources mapping="/admin/error/**/" location="/error/"/>
+    <mvc:resources mapping="/admin/js/**/" location="/js/"/>
+    <mvc:resources mapping="/admin/css/**/" location="/css/"/>
+    <mvc:resources mapping="/admin/img/**/" location="/img/"/>
+    <mvc:resources mapping="/admin/fonts/**/" location="/fonts/"/>
+
+</beans>
