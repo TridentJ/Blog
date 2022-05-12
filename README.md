@@ -45,4 +45,9 @@ json提交框中输入以下内容：
 
 # log4j RCE
 http://localhost:8080/blog/login.htm
+![11](https://user-images.githubusercontent.com/1740718/168002930-6d0cc845-7e17-447c-a39d-149e9854f218.png)
+![12](https://user-images.githubusercontent.com/1740718/168002945-20d2ded2-c65d-468d-9d87-29d47da625c8.png)
+
+
+
 
