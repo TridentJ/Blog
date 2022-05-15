@@ -14,7 +14,7 @@
         <jdbcConnection driverClass="org.mariadb.jdbc.Driver"
                         connectionURL="jdbc:mariadb://localhost:3306/blog?serverTimezone=Asia/Shanghai"
                         userId="root"
-                        password="smart@2021">
+                        password="test@2021">
         </jdbcConnection>
         
         <javaModelGenerator targetPackage="com.jyf.blog.bean" targetProject="D:\workspace\idea\Blog\src\main\java">
